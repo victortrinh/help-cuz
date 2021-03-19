@@ -1,12 +1,15 @@
+/**
+ * STEP 2: REMOVING UNUSED IMPORTS
+ * 
+ * Don't think I need to explain this one. 🙈
+ */
+
 import {AttachMoney, DirectionsBike, KeyboardArrowRight, LocalMall, Place} from '@material-ui/icons';
-import {Container, Grid, IconButton, Toolbar, Typography,} from '@material-ui/core';
+import { Grid, Typography, } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Snackbar from "@material-ui/core/Snackbar";
 import {withStyles} from '@material-ui/core/styles';
 
 import Moment from "react-moment";
@@ -76,6 +79,8 @@ class AvailableRoutes extends React.Component {
 
   /* FETCHING */
   fetchRoutes() {
+    const {displayAjaxError} = this.props;
+
     this.setState({loading: true});
 
     axios.get('/apps/cyclist/get_available_routes/', {
@@ -91,28 +96,30 @@ class AvailableRoutes extends React.Component {
     })
     .catch(err => {
       this.setState({loading: false});
-      this.props.displayAjaxError(err);
+      displayAjaxError(err);
     });
   }
 
 
   render() {
     /***
-     * STEP 1 : DESTRUCTURING THE PROPS
+     * STEP 1 : DESTRUCTURING THE PROPS  
+     * STEP 2 : DESTRUCTURING THE STATE
      * 
-     * So we don't repeat "this.props" everywhere 
+     * So we don't repeat "this.props" and "this.state" everywhere 
      */
     const { classes } = this.props;
+    const { loading, routes } = this.state;
     const bullet = <span class="info-separator">•</span>;
 
     return (
       <Grid item container direction="column">
-        {this.state.loading ?
+        {loading ?
           <Spinner/>
           :
           <List csubheader={<li/>}>
-            {this.state.routes.length > 0 ? (
-              this.state.routes.map((route) => (
+            {routes.length > 0 ? (
+              routes.map((route) => (
                 <ListItem key={route.id}>
                   <Card style={{flex: 1, textDecoration: "none"}} component={NavLink} to={`/cyclist/preview/${route.id}/`}>
                     <CardContent className={classes.card}>

@@ -1,21 +1,26 @@
-import React from "react";
+import {AttachMoney, DirectionsBike, KeyboardArrowRight, LocalMall, Place} from '@material-ui/icons';
 import {Container, Grid, IconButton, Toolbar, Typography,} from '@material-ui/core';
-import {Place, KeyboardArrowRight, DirectionsBike, AttachMoney, LocalMall} from '@material-ui/icons';
-import {withStyles} from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import axios from "axios";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import Snackbar from "@material-ui/core/Snackbar";
-import Moment from "react-moment";
-import {NavLink} from "react-router-dom";
-import {SecondsToDurationStringConverter} from "../../../Shared/Utils";
-import Spinner from "../../../Components/Spinner";
+import {withStyles} from '@material-ui/core/styles';
 
-const styles = theme => ({
+import Moment from "react-moment";
+
+import {NavLink} from "react-router-dom";
+
+import React from "react";
+
+import axios from "axios";
+
+import Spinner from "../../../Components/Spinner";
+import {SecondsToDurationStringConverter} from "../../../Shared/Utils";
+
+export const styles = theme => ({
   routeHeader: {
     marginBottom: 16,
   },
@@ -92,6 +97,12 @@ class AvailableRoutes extends React.Component {
 
 
   render() {
+    /***
+     * STEP 1 : DESTRUCTURING THE PROPS
+     * 
+     * So we don't repeat "this.props" everywhere 
+     */
+    const { classes } = this.props;
     const bullet = <span class="info-separator">•</span>;
 
     return (
@@ -104,50 +115,50 @@ class AvailableRoutes extends React.Component {
               this.state.routes.map((route) => (
                 <ListItem key={route.id}>
                   <Card style={{flex: 1, textDecoration: "none"}} component={NavLink} to={`/cyclist/preview/${route.id}/`}>
-                    <CardContent className={this.props.classes.card}>
+                    <CardContent className={classes.card}>
 
                       <Grid container direction="row" style={{alignItems: "center"}}>
 
                         <Grid item container sm style={{flex: 1}}>
                           <Grid direction="column" style={{flex: 1}}>
-                            <Grid container className={this.props.classes.routeHeader}>
+                            <Grid container className={classes.routeHeader}>
                               {route.planned_pickup_datetime ?
                                 <React.Fragment>
                                   <Typography item style={{flex: 1}}>
                                     <Moment format="MMM Do">{route.planned_pickup_datetime}</Moment>
                                     <br/>
-                                    <Moment format="h:mm a" className={this.props.classes.routeIdentifier}>{route.planned_pickup_datetime}</Moment>
+                                    <Moment format="h:mm a" className={classes.routeIdentifier}>{route.planned_pickup_datetime}</Moment>
                                   </Typography>
                                 </React.Fragment>
                                 :
                                 <Typography/>
                                 /*route.is_ready_for_delivery ?
-                                    <Typography className={this.props.classes.routeIdentifier}>Route<br/>not planned yet</Typography>
+                                    <Typography className={classes.routeIdentifier}>Route<br/>not planned yet</Typography>
                                     :
-                                    <Typography className={this.props.classes.routeIdentifier}>Route<br/>not ready</Typography>*/
+                                    <Typography className={classes.routeIdentifier}>Route<br/>not ready</Typography>*/
                               }
 
                               <Typography variant="body2" item style={{flex: 1, textAlign: "right", color: "#666", fontSize: 12, fontWeight: 500}}>Route #{route.id}</Typography>
                             </Grid>
 
                             <Grid container direction="row">
-                              <CardMedia image={route.map_image_url} class={this.props.classes.mapPreview}/>
+                              <CardMedia image={route.map_image_url} class={classes.mapPreview}/>
 
                               <Grid>
-                                <Typography className={this.props.classes.routeInfo}>
-                                  <LocalMall className={this.props.classes.icon}/>
+                                <Typography className={classes.routeInfo}>
+                                  <LocalMall className={classes.icon}/>
                                   {route.num_shipments}
                                 </Typography>
 
-                                <Typography className={this.props.classes.routeInfo}>
-                                  <DirectionsBike className={this.props.classes.icon}/>
+                                <Typography className={classes.routeInfo}>
+                                  <DirectionsBike className={classes.icon}/>
                                   {SecondsToDurationStringConverter(route.planned_duration_s)}
                                   {bullet}
                                   {(route.planned_distance_m / 1000).toFixed(2)} km
                                 </Typography>
 
-                                <Typography className={this.props.classes.routeInfo}>
-                                  <AttachMoney className={this.props.classes.icon}/>
+                                <Typography className={classes.routeInfo}>
+                                  <AttachMoney className={classes.icon}/>
                                   {route.estimated_payout_amount} $
                                 </Typography>
                               </Grid>

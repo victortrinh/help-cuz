@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { makeStyles } from "@material-ui/core";
+
+export const useStyles = makeStyles({
     routeHeader: {
       marginBottom: 16,
     },
@@ -18,7 +20,8 @@ export const styles = theme => ({
       marginBottom: 4
     },
     card: {
-        flex: 1, textDecoration: "none"
+        flex: 1, 
+        textDecoration: "none"
     },
     cardContent: {
       padding: 12,

@@ -4,7 +4,7 @@
  * Don't think I need to explain this one. 🙈
  */
 
-import {AttachMoney, DirectionsBike, KeyboardArrowRight, LocalMall, Place} from '@material-ui/icons';
+import {AttachMoney, DirectionsBike, KeyboardArrowRight, LocalMall} from '@material-ui/icons';
 import { Grid, Typography, } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -23,45 +23,16 @@ import axios from "axios";
 import Spinner from "../../../Components/Spinner";
 import {SecondsToDurationStringConverter} from "../../../Shared/Utils";
 
-export const styles = theme => ({
-  routeHeader: {
-    marginBottom: 16,
-  },
-  routeIdentifier: {
-    fontSize: 16,
-    fontWeight: 500,
-    color: "#444"
-  },
-  routeInfo: {
-    fontSize: 16,
-    color: "#444"
-  },
-  icon: {
-    fontSize: 16,
-    color: '#ccc',
-    marginRight: 4,
-    marginBottom: 4
-  },
-  card: {
-    padding: 12,
-    "&:last-child": {
-      paddingBottom: 12
-    }
-  },
-  actionContainer: {
-    alignItems: "flex-end",
-    paddingTop: 8,
-    marginTop: 16,
-    borderTop: "1px solid #efefef"
-  },
-  mapPreview: {
-    width: 80,
-    height: 80,
-    borderRadius: 8,
-    marginRight: 16,
-    backgroundSize: "cover"
-  },
-});
+import { styles } from './AvailableRoutes.styles';
+
+/**
+ * STEP 3 : IMPORTING THE STYLES 💡
+ * 
+ * Now you can reuse this everywhere.
+ * 
+ * Preferably the styling you are importing will only contain the classes you need.
+ */
+
 
 class AvailableRoutes extends React.Component {
   constructor(props) {
@@ -103,6 +74,7 @@ class AvailableRoutes extends React.Component {
 
   render() {
     /***
+     * 🧹 CLEAN UP
      * STEP 1 : DESTRUCTURING THE PROPS  
      * STEP 2 : DESTRUCTURING THE STATE
      * 
@@ -121,8 +93,17 @@ class AvailableRoutes extends React.Component {
             {routes.length > 0 ? (
               routes.map((route) => (
                 <ListItem key={route.id}>
-                  <Card style={{flex: 1, textDecoration: "none"}} component={NavLink} to={`/cyclist/preview/${route.id}/`}>
-                    <CardContent className={classes.card}>
+                  {
+                    /**
+                     * STEP 3 : Inline styling is a big no-no and makes me wanna cry 🐛
+                     * 
+                     * This is everywhere 😭
+                     * 
+                     * Everywhere that there's a style={{}}, the styling should be moved to AvailableRoutes.styles.js
+                     */
+                   }
+                  <Card className={classes.card} component={NavLink} to={`/cyclist/preview/${route.id}/`}>
+                    <CardContent className={classes.cardContent}>
 
                       <Grid container direction="row" style={{alignItems: "center"}}>
 
